@@ -1,0 +1,67 @@
+syntax="proto3";
+
+import "google/protobuf/struct.proto";
+
+package users;
+
+message BaseResponse {
+    string message = 1;
+}
+
+message UpdateFieldRequest {
+    string field = 1;
+    google.protobuf.Value value = 2;
+}
+
+message PassportRequest {
+    string image = 1;
+}
+
+message UserResponse {
+    uint64 id = 1;
+    string username = 2;
+    string first_name = 3;
+    string last_name = 4;
+    string surname = 5;
+    string email = 6;
+    string phone = 7;
+    uint32 age = 8;
+    string type_cigarettes = 9;
+    uint32 score = 10;
+    string utm_source = 11;
+    string quiz_answers = 12;
+}
+
+message UsersRequest {
+    uint32 offset = 1;
+    uint32 limit = 2;
+}
+
+message BlackListRequest {
+    uint32 offset = 1;
+    uint32 limit = 2;
+}
+
+message UserId {
+    uint64 id = 1;
+}
+
+message BanRequest {
+    uint32 id = 1;
+    bool status = 2;
+}
+
+message QuizRequest {
+    string field = 1;
+    string value = 2;
+}
+
+service Users {
+    rpc UpdateField (UpdateFieldRequest) returns (BaseResponse) {}
+    rpc GetUsers (UsersRequest) returns (stream UserResponse) {}
+    rpc GetUserById (UserId) returns (UserResponse) {}
+    rpc ConfirmPassport (PassportRequest) returns (stream BaseResponse) {}
+    rpc GetBlackList (BlackListRequest) returns  (stream UserId) {}
+    rpc BanUser (BanRequest) returns (BaseResponse) {}
+    rpc QuizAnswer (QuizRequest) returns (BaseResponse) {}
+}

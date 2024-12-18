@@ -1,0 +1,18 @@
+syntax="proto3";
+
+package auth;
+
+message AuthRequest {
+    uint64 id = 1;
+    string username = 2;
+    string utm_source = 3;
+}
+
+message AuthResponse {
+    bool status = 1;
+    string access_token = 2;
+}
+
+service Auth {
+    rpc AuthOrCreate(AuthRequest) returns (AuthResponse) {}
+}

@@ -1,0 +1,36 @@
+syntax="proto3";
+
+package game;
+
+message BaseResponse {
+    string message = 1;
+}
+
+message RatingRequest {
+    uint32 limit = 1;
+}
+
+message RatingResponse {
+    uint64 id = 1;
+    string username = 2;
+    uint32 score = 3;
+    uint32 rank = 4;
+}
+
+message UpdateRatingRequest {
+    uint32 score = 1;
+}
+
+message LevelRequest {
+    uint32 level = 1;
+}
+
+message LevelResponse {
+    bool status = 1;
+}
+
+service Game {
+    rpc GetRating (RatingRequest) returns (stream RatingResponse) {}
+    rpc UpdateRating (UpdateRatingRequest) returns (BaseResponse) {}
+    rpc OpenLevel (LevelRequest) returns (LevelResponse) {}
+}
